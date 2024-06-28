@@ -37,9 +37,9 @@ function playRound(computerChoice, humanChoice) {
     console.log(`It's a draw! Computer chose ${computerChoice} too.`);
     return "draw";
   } else if (
-    (computerChoice === "rock" && humanChoice === "paper") ||
-    (computerChoice === "paper" && humanChoice === "scissors") ||
-    (computerChoice === "scissors" && humanChoice === "rock")
+    (computerChoice === "Rock" && humanChoice === "Paper") ||
+    (computerChoice === "Paper" && humanChoice === "Scissors") ||
+    (computerChoice === "Scissors" && humanChoice === "Rock")
   ) {
     console.log(`You won! ${humanChoice} beats ${computerChoice}.`);
     return "human";
