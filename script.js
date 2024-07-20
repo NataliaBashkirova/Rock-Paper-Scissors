@@ -50,6 +50,8 @@ function playRound(computerChoice, humanChoice) {
 }
 
 function playGame() {
+  InitializeUI();
+
   let humanScore = 0,
     computerScore = 0;
   for (i = 0; i < 5; i++) {
@@ -75,6 +77,26 @@ function playGame() {
   } else {
     console.log("A draw!");
   }
+}
+
+function InitializeUI() {
+  let rockButton = document.createElement("button");
+  rockButton.id = "rock";
+  rockButton.textContent = "ROCK";
+
+  let paperButton = document.createElement("button");
+  paperButton.id = "button";
+  paperButton.textContent = "PAPER";
+
+  let scissorsButton = document.createElement("button");
+  scissorsButton.id = "scissors";
+  scissorsButton.textContent = "SCISSORS";
+
+  let domBody = document.querySelector("body");
+  domBody.appendChild(rockButton);
+  domBody.appendChild(paperButton);
+  domBody.appendChild(scissorsButton);
+
 }
 
 playGame();
