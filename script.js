@@ -18,12 +18,6 @@ function getComputerChoice() {
   }
 }
 
-function getHumanChoice() {
-  return makeStringProper(
-    prompt("What will you pick? (rock/paper/scissors)").trim().toLowerCase()
-  );
-}
-
 function makeStringProper(input) {
   if (input.length > 0) {
     return input.slice(0, 1).toUpperCase() + input.slice(1);
@@ -32,7 +26,9 @@ function makeStringProper(input) {
   }
 }
 
-function playRound(computerChoice, humanChoice) {
+function playRound(e) {
+  const computerChoice = getComputerChoice();
+  const humanChoice = e.target.id;
   if (computerChoice === humanChoice) {
     console.log(`It's a draw! Computer chose ${computerChoice} too.`);
     return "draw";
@@ -57,10 +53,7 @@ function playGame() {
   for (i = 0; i < 5; i++) {
     console.log(`Beggining round ${i + 1}...`);
 
-    const computerChoice = getComputerChoice();
-    const humanChoice = getHumanChoice();
-
-    result = playRound(computerChoice, humanChoice);
+    result = playRound();
     if (result === "human") {
       humanScore++;
     } else if (result === "computer") {
@@ -81,16 +74,21 @@ function playGame() {
 
 function InitializeUI() {
   let rockButton = document.createElement("button");
-  rockButton.id = "rock";
+  rockButton.id = "Rock";
   rockButton.textContent = "ROCK";
+  rockButton.addEventListener("click", playRound);
 
   let paperButton = document.createElement("button");
-  paperButton.id = "button";
+  paperButton.id = "Paper";
   paperButton.textContent = "PAPER";
+  paperButton.addEventListener("click", playRound);
 
   let scissorsButton = document.createElement("button");
-  scissorsButton.id = "scissors";
+  scissorsButton.id = "Scissors";
   scissorsButton.textContent = "SCISSORS";
+  scissorsButton.addEventListener("click", playRound);
+
+
 
   let domBody = document.querySelector("body");
   domBody.appendChild(rockButton);
