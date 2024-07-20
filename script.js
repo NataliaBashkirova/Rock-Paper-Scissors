@@ -18,61 +18,36 @@ function getComputerChoice() {
   }
 }
 
-function makeStringProper(input) {
-  if (input.length > 0) {
-    return input.slice(0, 1).toUpperCase() + input.slice(1);
-  } else {
-    throw new Error("String is empty or too short.");
-  }
-}
-
 function playRound(e) {
   const computerChoice = getComputerChoice();
   const humanChoice = e.target.id;
+  const resultsCtr = document.querySelector("#resultsCtr");
   if (computerChoice === humanChoice) {
-    console.log(`It's a draw! Computer chose ${computerChoice} too.`);
-    return "draw";
+    resultsCtr.textContent += `\nIt's a draw! Computer chose ${computerChoice} too.`;
   } else if (
     (computerChoice === "Rock" && humanChoice === "Paper") ||
     (computerChoice === "Paper" && humanChoice === "Scissors") ||
     (computerChoice === "Scissors" && humanChoice === "Rock")
   ) {
-    console.log(`You won! ${humanChoice} beats ${computerChoice}.`);
-    return "human";
+    resultsCtr.textContent += `\nYou won! ${humanChoice} beats ${computerChoice}.`;
+    humanScore++;
   } else {
-    console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
-    return "computer";
-  }
-}
-
-function playGame() {
-  InitializeUI();
-
-  let humanScore = 0,
-    computerScore = 0;
-  for (i = 0; i < 5; i++) {
-    console.log(`Beggining round ${i + 1}...`);
-
-    result = playRound();
-    if (result === "human") {
-      humanScore++;
-    } else if (result === "computer") {
-      computerScore++;
-    }
-
-    console.log(`Score\nHuman: ${humanScore}    Computer: ${computerScore}`);
+    resultsCtr.textContent += `\nYou lose! ${computerChoice} beats ${humanChoice}.`;
+    computerScore++;
   }
 
-  if (humanScore > computerScore) {
-    console.log("You won!");
-  } else if (computerScore > humanScore) {
-    console.log("Computer won!");
-  } else {
-    console.log("A draw!");
+  resultsCtr.textContent += `\n Human: ${humanScore} Computer: ${computerScore}`;
+
+  if (computerScore >= 5 || humanScore >= 5) {
+    resultsCtr.textContent += `\n\n ${computerScore >=5 ? 'COMPUTER' : 'HUMAN'} is a winner!`;
+    document.querySelectorAll("button").forEach(x => x.disabled = true);
   }
 }
 
 function InitializeUI() {
+  let controlsCtr = document.createElement("div");
+  controlsCtr.id = "controlsCtr";
+
   let rockButton = document.createElement("button");
   rockButton.id = "Rock";
   rockButton.textContent = "ROCK";
@@ -88,13 +63,22 @@ function InitializeUI() {
   scissorsButton.textContent = "SCISSORS";
   scissorsButton.addEventListener("click", playRound);
 
-
+  let resultsCtr = document.createElement('div');
+  resultsCtr.id = "resultsCtr";
+  resultsCtr.textContent = "Computer says:";
+  resultsCtr.style.border = "black 1px solid";
+  resultsCtr.style.whiteSpace = "pre-line";
+  
 
   let domBody = document.querySelector("body");
-  domBody.appendChild(rockButton);
-  domBody.appendChild(paperButton);
-  domBody.appendChild(scissorsButton);
+  domBody.appendChild(controlsCtr);
+  controlsCtr.appendChild(rockButton);
+  controlsCtr.appendChild(paperButton);
+  controlsCtr.appendChild(scissorsButton);
+  domBody.appendChild(resultsCtr);
 
 }
 
-playGame();
+InitializeUI();
+let humanScore = 0;
+let computerScore = 0;
